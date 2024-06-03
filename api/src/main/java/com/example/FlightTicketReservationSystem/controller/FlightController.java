@@ -1,7 +1,9 @@
 package com.example.FlightTicketReservationSystem.controller;
 
 import com.example.FlightTicketReservationSystem.model.Flight;
+import com.example.FlightTicketReservationSystem.request.FilterFlightsRequest;
 import com.example.FlightTicketReservationSystem.request.SearchFlightsRequest;
+import com.example.FlightTicketReservationSystem.response.SearchFlightsResponse;
 import com.example.FlightTicketReservationSystem.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,18 @@ public class FlightController {
     private final FlightService flightService;
 
     @GetMapping
-    public ResponseEntity<List<Flight>> getAllFlightsWithSearch(@RequestBody SearchFlightsRequest request) {
-        return ResponseEntity.ok(flightService.getAllFlightsWithSearch(request));
+    public ResponseEntity<List<Flight>> getAllFlights() {
+        return ResponseEntity.ok(flightService.getAllFlights());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<SearchFlightsResponse> searchFlights(@RequestBody SearchFlightsRequest request) {
+        return ResponseEntity.ok(flightService.searchFlights(request));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Flight>> filterFlights(@RequestBody FilterFlightsRequest request) {
+        return ResponseEntity.ok(flightService.filterFlights(request));
     }
 
     @PostMapping
