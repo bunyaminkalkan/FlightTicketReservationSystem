@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.Field;
 import org.springframework.data.couchbase.repository.Collection;
+import org.springframework.data.couchbase.repository.Scope;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 @Document
+@Scope("public")
 @Collection("flights")
 @Data
 @AllArgsConstructor

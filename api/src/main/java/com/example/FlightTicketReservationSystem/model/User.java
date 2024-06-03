@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.Field;
 import org.springframework.data.couchbase.repository.Collection;
+import org.springframework.data.couchbase.repository.Scope;
 
 @Document
+@Scope("public")
 @Collection("users")
 @Data
 @AllArgsConstructor
