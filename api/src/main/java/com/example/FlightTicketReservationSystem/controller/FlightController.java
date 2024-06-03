@@ -1,6 +1,7 @@
 package com.example.FlightTicketReservationSystem.controller;
 
 import com.example.FlightTicketReservationSystem.model.Flight;
+import com.example.FlightTicketReservationSystem.request.SearchFlightsRequest;
 import com.example.FlightTicketReservationSystem.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class FlightController {
     private final FlightService flightService;
 
     @GetMapping
-    public ResponseEntity<List<Flight>> getAllFlights() {
-        return ResponseEntity.ok(flightService.getAllFlights());
+    public ResponseEntity<List<Flight>> getAllFlightsWithSearch(@RequestBody SearchFlightsRequest request) {
+        return ResponseEntity.ok(flightService.getAllFlightsWithSearch(request));
     }
 
     @PostMapping
