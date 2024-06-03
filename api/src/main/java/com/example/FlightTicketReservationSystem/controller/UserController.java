@@ -2,6 +2,7 @@ package com.example.FlightTicketReservationSystem.controller;
 
 import com.example.FlightTicketReservationSystem.model.User;
 import com.example.FlightTicketReservationSystem.request.LoginRegisterRequest;
+import com.example.FlightTicketReservationSystem.response.UserResponse;
 import com.example.FlightTicketReservationSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody LoginRegisterRequest request) {
+    public ResponseEntity<UserResponse> register(@RequestBody LoginRegisterRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRegisterRequest request) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRegisterRequest request) {
         return ResponseEntity.ok(userService.login(request));
     }
 }
