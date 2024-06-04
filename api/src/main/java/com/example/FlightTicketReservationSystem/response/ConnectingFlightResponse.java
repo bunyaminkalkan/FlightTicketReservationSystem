@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class ConnectingFlightResponse {
@@ -21,10 +22,15 @@ public class ConnectingFlightResponse {
     private LocalDateTime arrivalDate1;
     private LocalDateTime departureDate2;
     private LocalDateTime arrivalDate2;
-    private Integer economySeatCount;
-    private Integer businessSeatCount;
+    private List<Integer> businessSeat1;
+    private List<Integer> economySeat1;
+    private List<Integer> businessSeat2;
+    private List<Integer> economySeat2;
+    private Integer economyPrice1;
+    private Integer businessPrice1;
+    private Integer economyPrice2;
+    private Integer businessPrice2;
     private Integer totalEconomyPrice;
-    private Integer totalBusinessPrice;
     private LocalTime totalWaitingTime;
     private LocalTime totalFlightTime;
     private LocalTime totalTime;
@@ -42,10 +48,15 @@ public class ConnectingFlightResponse {
         this.arrivalDate1 = flight1.getArrivalDate();
         this.departureDate2 = flight2.getDepartureDate();
         this.arrivalDate2 = flight2.getArrivalDate();
-        this.economySeatCount = chooseMinusSeat(flight1.getEconomySeat().size(), flight2.getEconomySeat().size());
-        this.businessSeatCount = chooseMinusSeat(flight1.getBusinessSeat().size(), flight2.getBusinessSeat().size());
+        this.businessSeat1 = flight1.getBusinessSeat();
+        this.economySeat1 = flight1.getEconomySeat();
+        this.businessSeat2 = flight2.getBusinessSeat();
+        this.economySeat2 = flight2.getEconomySeat();
+        this.economyPrice1 = flight1.getEconomyPrice();
+        this.businessPrice1 = flight1.getBusinessPrice();
+        this.economyPrice2 = flight2.getEconomyPrice();
+        this.businessPrice2 = flight2.getBusinessPrice();
         this.totalEconomyPrice = flight1.getEconomyPrice() + flight2.getEconomyPrice();
-        this.totalBusinessPrice = flight1.getBusinessPrice() + flight2.getBusinessPrice();
         this.totalFlightTime = addLocalTimes(flight1.getFlightTime(), flight2.getFlightTime());
         this.totalWaitingTime = subtractLocalDateTimes(flight2.getDepartureDate(), flight1.getArrivalDate());
         this.totalTime = addLocalTimes(totalFlightTime, totalWaitingTime);
