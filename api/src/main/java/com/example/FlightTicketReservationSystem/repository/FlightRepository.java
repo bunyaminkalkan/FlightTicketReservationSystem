@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface FlightRepository extends CouchbaseRepository<Flight, Long> {
     Optional<List<Flight>> findByDepartureLocation(String departureLocation);
     Optional<List<Flight>> findByArrivalLocation(String arrivalLocation);
+    Optional<Flight> findByFlightNumber(String flightNumber);
 }

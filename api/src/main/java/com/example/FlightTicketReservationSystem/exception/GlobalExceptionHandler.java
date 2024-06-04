@@ -29,6 +29,16 @@ public class GlobalExceptionHandler {
         return createExceptionResponse(e.getMessage(), badRequest);
     }
 
+    @ExceptionHandler(FlightNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleFlightNotFoundException(FlightNotFoundException e) {
+        return createExceptionResponse(e.getMessage(), notFound);
+    }
+
+    @ExceptionHandler(SeatAlreadyIsSoldException.class)
+    public ResponseEntity<ExceptionResponse> handleSeatAlreadyIsSoldException(SeatAlreadyIsSoldException e) {
+        return createExceptionResponse(e.getMessage(), badRequest);
+    }
+
     private ResponseEntity<ExceptionResponse> createExceptionResponse(String message, HttpStatus status) {
         ExceptionResponse response = new ExceptionResponse(
                 message,

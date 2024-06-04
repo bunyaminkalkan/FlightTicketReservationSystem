@@ -21,10 +21,10 @@ public class Ticket {
     private Long id;
 
     @Field
-    private User user;
+    private String userId;
 
     @Field
-    private Flight flight;
+    private String flightNumber;
 
     @Field
     private Integer seat;
