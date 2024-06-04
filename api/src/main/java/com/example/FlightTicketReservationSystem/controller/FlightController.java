@@ -29,7 +29,7 @@ public class FlightController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Flight>> filterFlights(@RequestBody FilterFlightsRequest request) {
+    public ResponseEntity<SearchFlightsResponse> filterFlights(@RequestBody FilterFlightsRequest request) {
         return ResponseEntity.ok(flightService.filterFlights(request));
     }
 

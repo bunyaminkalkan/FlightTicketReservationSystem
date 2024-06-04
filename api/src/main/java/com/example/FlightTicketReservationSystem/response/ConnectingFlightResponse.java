@@ -27,6 +27,7 @@ public class ConnectingFlightResponse {
     private Integer totalBusinessPrice;
     private LocalTime totalWaitingTime;
     private LocalTime totalFlightTime;
+    private LocalTime totalTime;
 
     public ConnectingFlightResponse(Flight flight1, Flight flight2) {
         this.flightNumber1 = flight1.getFlightNumber();
@@ -47,6 +48,7 @@ public class ConnectingFlightResponse {
         this.totalBusinessPrice = flight1.getBusinessPrice() + flight2.getBusinessPrice();
         this.totalFlightTime = addLocalTimes(flight1.getFlightTime(), flight2.getFlightTime());
         this.totalWaitingTime = subtractLocalDateTimes(flight2.getDepartureDate(), flight1.getArrivalDate());
+        this.totalTime = addLocalTimes(totalFlightTime, totalWaitingTime);
     }
 
     private LocalTime addLocalTimes(LocalTime time1, LocalTime time2) {

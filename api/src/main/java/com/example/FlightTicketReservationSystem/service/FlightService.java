@@ -52,13 +52,29 @@ public class FlightService {
         return searchFlightsResponse;
     }
 
-    public List<Flight> filterFlights(FilterFlightsRequest request) {
-        List<Flight> filteredFlights = new ArrayList<>();
-        if (request.getIsDirectFlight()) {
-            filteredFlights.addAll(searchFlightsResponse.getDirectFlights());
+    public SearchFlightsResponse filterFlights(FilterFlightsRequest request) {
+        SearchFlightsResponse filteredFlights = new SearchFlightsResponse();
+        if(request.getIsDirectFlight() != null && request.getIsDirectFlight()) {
+            filteredFlights.setDirectFlights(searchFlightsResponse.getDirectFlights());
+            filteredFlights.setConnectingFlights(new ArrayList<>());
+        } else if (request.getIsDirectFlight() != null) {
+            filteredFlights.setConnectingFlights(searchFlightsResponse.getConnectingFlights());
+            filteredFlights.setDirectFlights(new ArrayList<>());
+        } else {
+            filteredFlights.setDirectFlights(searchFlightsResponse.getDirectFlights());
+            filteredFlights.setConnectingFlights(searchFlightsResponse.getConnectingFlights());
         }
-        return filteredFlights;
 
+        if (request.getMaxPrice() != null && request.getMaxPrice() > 0) {
+            filteredFlights.setDirectFlights(filteredFlights.getDirectFlights().stream().filter(flight -> flight.getEconomyPrice() < request.getMaxPrice()).toList());
+            filteredFlights.setConnectingFlights(filteredFlights.getConnectingFlights().stream().filter(flight -> flight.getTotalEconomyPrice() < request.getMaxPrice()).toList());
+        }
+        if (request.getMaxFlightTime() != null) {
+            filteredFlights.setDirectFlights(filteredFlights.getDirectFlights().stream().filter(flight -> flight.getFlightTime().isBefore(request.getMaxFlightTime()) || flight.getFlightTime().equals(request.getMaxFlightTime())).toList());
+            filteredFlights.setConnectingFlights(filteredFlights.getConnectingFlights().stream().filter(flight -> flight.getTotalTime().isBefore(request.getMaxFlightTime()) || flight.getTotalTime().equals(request.getMaxFlightTime())).toList());
+        }
+
+        return filteredFlights;
     }
 
     public Flight createFlight(Flight flight) {
