@@ -39,15 +39,10 @@ public class FlightService {
         for (Flight sameDepartureFlight : sameDepartureLocationFlights) {
             for (Flight sameArrivalFlight : sameArrivalLocationFlights) {
                 if (sameDepartureFlight.getArrivalLocation().equals(sameArrivalFlight.getDepartureLocation()) &&
+                        sameDepartureFlight.getDepartureDate().toLocalDate().isEqual(request.getDepartureDay()) &&
                         sameDepartureFlight.getArrivalDate().isBefore(sameArrivalFlight.getDepartureDate()) &&
                         sameArrivalFlight.getDepartureDate().isAfter(sameDepartureFlight.getArrivalDate().plusMinutes(25))) {
-                    ConnectingFlightResponse connectingFlight = new ConnectingFlightResponse();
-                    connectingFlight.setFlightNumber1(sameDepartureFlight.getFlightNumber());
-                    connectingFlight.setFlightNumber2(sameArrivalFlight.getFlightNumber());
-                    connectingFlight.setTotalFlightTime(addLocalTimes(sameDepartureFlight.getFlightTime(), sameArrivalFlight.getFlightTime()));
-                    connectingFlight.setTotalWaitingTime(subtractLocalDateTimes(sameDepartureFlight.getArrivalDate(), sameArrivalFlight.getDepartureDate()));
-                    connectingFlight.setTotalEconomyPrice(sameDepartureFlight.getEconomyPrice() + sameArrivalFlight.getEconomyPrice());
-                    connectingFlight.setTotalBusinessPrice(sameDepartureFlight.getBusinessPrice() + sameArrivalFlight.getBusinessPrice());
+                    ConnectingFlightResponse connectingFlight = new ConnectingFlightResponse(sameDepartureFlight, sameArrivalFlight);
                     connectingFlights.add(connectingFlight);
                 }
             }
@@ -70,22 +65,4 @@ public class FlightService {
         return flightRepository.save(flight);
     }
 
-    private LocalTime addLocalTimes(LocalTime time1, LocalTime time2) {
-        int totalMinutes = time1.getHour() * 60 + time1.getMinute() + time2.getHour() * 60 + time2.getMinute();
-        int hours = totalMinutes / 60;
-        int minutes = totalMinutes % 60;
-
-        return LocalTime.of(hours % 24, minutes);
-    }
-
-    private LocalTime subtractLocalDateTimes(LocalDateTime dateTime1, LocalDateTime dateTime2) {
-        Duration duration = Duration.between(dateTime1, dateTime2);
-
-        long totalSeconds = duration.getSeconds();
-        int hours = (int) (totalSeconds / 3600);
-        int minutes = (int) ((totalSeconds % 3600) / 60);
-        int seconds = (int) (totalSeconds % 60);
-
-        return LocalTime.of(hours % 24, minutes, seconds);
-    }
 }
