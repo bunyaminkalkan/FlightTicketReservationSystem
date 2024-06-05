@@ -2,7 +2,6 @@ package com.example.FlightTicketReservationSystem.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 

@@ -1,6 +1,5 @@
 package com.example.FlightTicketReservationSystem.controller;
 
-import com.example.FlightTicketReservationSystem.model.User;
 import com.example.FlightTicketReservationSystem.request.LoginRegisterRequest;
 import com.example.FlightTicketReservationSystem.response.UserResponse;
 import com.example.FlightTicketReservationSystem.service.UserService;
