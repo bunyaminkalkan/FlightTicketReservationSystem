@@ -5,7 +5,7 @@ import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.repository.config.EnableCouchbaseRepositories;
 
 @Configuration
-@EnableCouchbaseRepositories
+@EnableCouchbaseRepositories(basePackages = {"com.example.FlightTicketReservationSystem.repository"})
 public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
 
     @Override
