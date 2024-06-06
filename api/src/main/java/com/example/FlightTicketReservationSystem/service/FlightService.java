@@ -9,6 +9,7 @@ import com.example.FlightTicketReservationSystem.response.SearchFlightsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -23,7 +24,8 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
-    public SearchFlightsResponse searchFlights(SearchFlightsRequest request) {
+    public SearchFlightsResponse searchFlights(String departureLocation, LocalDate departureDay, String arrivalLocation, String airlineCompany) {
+        SearchFlightsRequest request = new SearchFlightsRequest(departureLocation, departureDay, arrivalLocation, airlineCompany);
         List<Flight> directFlights = flightRepository.findByDepartureLocationAndDepartureDate(request.getDepartureLocation(), request.getDepartureDay().toString())
                 .orElse(Collections.emptyList()).stream()
                 .filter(flight -> flight.getArrivalLocation().equals(request.getArrivalLocation()))
@@ -47,7 +49,8 @@ public class FlightService {
         return searchFlightsResponse;
     }
 
-    public SearchFlightsResponse filterFlights(FilterFlightsRequest request) {
+    public SearchFlightsResponse filterFlights(Boolean isDirectFlight, Integer maxPrice, LocalTime maxFlightTime) {
+        FilterFlightsRequest request = new FilterFlightsRequest(isDirectFlight, maxPrice, maxFlightTime);
         SearchFlightsResponse filteredFlights = new SearchFlightsResponse();
 
         if(request.getIsDirectFlight() != null) {
