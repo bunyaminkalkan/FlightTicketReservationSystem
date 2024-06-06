@@ -1,14 +1,12 @@
 package com.example.FlightTicketReservationSystem.controller;
 
 import com.example.FlightTicketReservationSystem.request.LoginRegisterRequest;
+import com.example.FlightTicketReservationSystem.request.UpdateUserRequest;
 import com.example.FlightTicketReservationSystem.response.UserResponse;
 import com.example.FlightTicketReservationSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -25,5 +23,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserResponse> login(@RequestBody LoginRegisterRequest request) {
         return ResponseEntity.ok(userService.login(request));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UpdateUserRequest request ) {
+        return ResponseEntity.ok(userService.update(id, request));
     }
 }

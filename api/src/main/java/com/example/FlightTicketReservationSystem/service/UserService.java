@@ -6,6 +6,7 @@ import com.example.FlightTicketReservationSystem.exception.UserNotFoundException
 import com.example.FlightTicketReservationSystem.model.User;
 import com.example.FlightTicketReservationSystem.repository.UserRepository;
 import com.example.FlightTicketReservationSystem.request.LoginRegisterRequest;
+import com.example.FlightTicketReservationSystem.request.UpdateUserRequest;
 import com.example.FlightTicketReservationSystem.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,19 @@ public class UserService {
         } else {
             throw new EmailOrPasswordIsNotValidException();
         }
+    }
+
+    public UserResponse update(Long id, UpdateUserRequest request) {
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        if (request.getEmail() != null && !request.getEmail().isEmpty()) {
+            user.setEmail(request.getEmail());
+        }
+        if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
+            user.setFirstName(request.getFirstName());
+        }
+        if (request.getLastName() != null && !request.getLastName().isEmpty()) {
+            user.setLastName(request.getLastName());
+        }
+        return new UserResponse(userRepository.save(user));
     }
 }
