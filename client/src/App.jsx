@@ -1,13 +1,17 @@
-import './App.css'
-import SearchFlightPage from './pages/SearchFlightPage'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SearchFlightPage from "./pages/SearchFlightPage";
+import FlightListPage from "./pages/FlightListPage";
 
-function App() {
-
+const App = () => {
   return (
-    <>
-      <SearchFlightPage/>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<SearchFlightPage />} />
+        <Route path="/flights" element={<FlightListPage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;
