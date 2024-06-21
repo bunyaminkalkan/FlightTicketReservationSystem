@@ -38,7 +38,7 @@ const SearchFlightPage = () => {
       if (connectingFlights.length === 0 && directFlights.length === 0) {
         message.error("No flights found for the given criteria");
       } else {
-        navigate("/flights", { state: { flights: response.data } });
+        navigate("/flights", { state:  response.data });
       }
     } catch (error) {
       console.log(error);

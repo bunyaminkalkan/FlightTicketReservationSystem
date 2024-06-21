@@ -6,7 +6,7 @@ import ConnectingFlightCard from "../components/ConnectingFlightCard";
 
 const FlightListPage = () => {
   const location = useLocation();
-  const { directFlights, connectingFlights } = location.state.flights;
+  const { directFlights, connectingFlights } = location.state;
 
   return (
     <div style={{ padding: "20px" }}>
