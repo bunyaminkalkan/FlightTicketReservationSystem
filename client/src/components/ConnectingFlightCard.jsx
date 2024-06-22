@@ -1,6 +1,5 @@
 import React from "react";
 import { Card } from "antd";
-import PaymentForm from "../components/PaymentForm";
 
 const ConnectingFlightCard = ({ flight }) => {
   return (
@@ -36,15 +35,6 @@ const ConnectingFlightCard = ({ flight }) => {
         <p>
           Total Economy Price: ${flight.economyPrice1 + flight.economyPrice2}
         </p>
-        <PaymentForm
-          isConnectingFlight={true}
-          flightNumber1={flight.flightNumber1}
-          economySeats1={flight.economySeat1}
-          businessSeats1={flight.businessSeat1}
-          flightNumber2={flight.flightNumber2}
-          economySeats2={flight.economySeat2}
-          businessSeats2={flight.businessSeat2}
-        />
       </Card>
     </>
   );
