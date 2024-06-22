@@ -1,5 +1,7 @@
 package com.example.FlightTicketReservationSystem.model;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +27,10 @@ public class User {
 
     @Field
     private String password;
+
+    @Field
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Field
     private String firstName;

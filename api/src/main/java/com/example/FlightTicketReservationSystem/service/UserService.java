@@ -3,6 +3,7 @@ package com.example.FlightTicketReservationSystem.service;
 import com.example.FlightTicketReservationSystem.exception.EmailAlreadyInUse;
 import com.example.FlightTicketReservationSystem.exception.EmailOrPasswordIsNotValidException;
 import com.example.FlightTicketReservationSystem.exception.UserNotFoundException;
+import com.example.FlightTicketReservationSystem.model.Role;
 import com.example.FlightTicketReservationSystem.model.User;
 import com.example.FlightTicketReservationSystem.repository.UserRepository;
 import com.example.FlightTicketReservationSystem.request.LoginRegisterRequest;
@@ -25,6 +26,7 @@ public class UserService {
         register.setId(userRepository.count()+1);
         register.setEmail(request.getEmail());
         register.setPassword(request.getPassword());
+        register.setRole(Role.USER);
         userRepository.save(register);
         return new UserResponse(register);
     }
