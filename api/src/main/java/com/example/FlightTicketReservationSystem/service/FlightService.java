@@ -1,5 +1,6 @@
 package com.example.FlightTicketReservationSystem.service;
 
+import com.example.FlightTicketReservationSystem.exception.FlightNotFoundException;
 import com.example.FlightTicketReservationSystem.model.Flight;
 import com.example.FlightTicketReservationSystem.repository.FlightRepository;
 import com.example.FlightTicketReservationSystem.request.FilterFlightsRequest;
@@ -70,6 +71,16 @@ public class FlightService {
         return flightRepository.save(flight);
     }
 
+    public Flight updateFlight(Long id, Flight newFlight) {
+        Flight flight = flightRepository.findById(id).orElseThrow(FlightNotFoundException::new);
+        updateFlightWithNewFlight(flight, newFlight);
+        return flightRepository.save(flight);
+    }
+
+    public void deleteFlight(Long id) {
+        flightRepository.deleteById(id);
+    }
+
     private void setFlightsByType(SearchFlightsResponse filteredFlights, boolean isDirectFlight) {
         if(isDirectFlight) {
             filteredFlights.setDirectFlights(searchFlightsResponse.getDirectFlights());
@@ -106,5 +117,17 @@ public class FlightService {
     private boolean isValidArrivalDate(Flight sameDepartureFlight, Flight sameArrivalFlight) {
         return sameArrivalFlight.getDepartureDate().isAfter(sameDepartureFlight.getArrivalDate().plusMinutes(25))
                 && sameArrivalFlight.getDepartureDate().isBefore(sameDepartureFlight.getArrivalDate().plusHours(12).plusMinutes(1));
+    }
+
+    private void updateFlightWithNewFlight(Flight flight, Flight newFlight) {
+        flight.setFlightNumber(newFlight.getFlightNumber());
+        flight.setPlaneNumber(newFlight.getPlaneNumber());
+        flight.setDepartureLocation(newFlight.getDepartureLocation());
+        flight.setDepartureDate(newFlight.getDepartureDate());
+        flight.setArrivalLocation(newFlight.getArrivalLocation());
+        flight.setArrivalDate(newFlight.getArrivalDate());
+        flight.setEconomyPrice(newFlight.getEconomyPrice());
+        flight.setBusinessPrice(newFlight.getBusinessPrice());
+        flight.setFlightTime(newFlight.getFlightTime());
     }
 }

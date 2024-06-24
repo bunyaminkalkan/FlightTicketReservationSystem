@@ -44,4 +44,15 @@ public class FlightController {
     public ResponseEntity<Flight> createFlight(@RequestBody Flight flight) {
         return ResponseEntity.ok(flightService.createFlight(flight));
     }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<Flight> updateFlight(@PathVariable Long id, @RequestBody Flight flight) {
+        return ResponseEntity.ok(flightService.updateFlight(id, flight));
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> deleteFlight(@PathVariable Long id) {
+        flightService.deleteFlight(id);
+        return ResponseEntity.ok().build();
+    }
 }
