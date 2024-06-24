@@ -33,8 +33,8 @@ public class User {
     private Role role;
 
     @Field
-    private String firstName;
+    private String firstName = "";
 
     @Field
-    private String lastName;
+    private String lastName = "";
 }
