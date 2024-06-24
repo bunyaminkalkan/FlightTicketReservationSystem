@@ -1,10 +1,8 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     try {
@@ -12,8 +10,11 @@ const RegisterPage = () => {
       console.log(response);
       localStorage.setItem("id", response.data.id);
       localStorage.setItem("isAdmin", false);
+      localStorage.setItem("email", response.data.email);
+      localStorage.setItem("firstName", response.data.firstName);
+      localStorage.setItem("lastName", response.data.lastName);
       message.success("Registration successful");
-    //   navigate("/");
+      window.location.href= "/"
     } catch (error) {
       message.error("Registration failed. Please try again.");
     }

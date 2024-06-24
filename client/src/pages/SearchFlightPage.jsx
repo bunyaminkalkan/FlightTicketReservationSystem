@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, DatePicker, Select, Button, message } from "antd";
+import { Form, DatePicker, Select, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SearchFlightPage.css";
@@ -38,7 +38,7 @@ const SearchFlightPage = () => {
       if (connectingFlights.length === 0 && directFlights.length === 0) {
         message.error("No flights found for the given criteria");
       } else {
-        navigate("/flights", { state:  response.data });
+        navigate("/flights", { state: response.data });
       }
     } catch (error) {
       console.log(error);
@@ -49,66 +49,175 @@ const SearchFlightPage = () => {
   };
 
   return (
-    <div>
-      <Form
-        name="flight_search"
-        layout="vertical"
-        onFinish={onFinish}
-        initialValues={{
-          departureLocation: "Istanbul",
-          departureDay: null,
-          arrivalLocation: "New York City",
-          airlineCompany: "",
-        }}
-      >
-        <Form.Item
-          name="departureLocation"
-          label="Departure Location"
-          rules={[
-            {
-              required: true,
-              message: "Please select a departure location!",
-            },
-          ]}
+    <div className="flex justify-center items-center search-container">
+      <div className="w-full max-w-md p-8 border border-gray-300 rounded-lg shadow-lg">
+        <Form
+          name="flight_search"
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{
+            departureLocation: "Istanbul",
+            departureDay: null,
+            arrivalLocation: "New York City",
+            airlineCompany: "",
+          }}
         >
-          <Input placeholder="Enter departure location" />
-        </Form.Item>
+          <Form.Item
+            name="departureLocation"
+            label="Departure Location"
+            rules={[
+              {
+                required: true,
+                message: "Please select a departure location!",
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder="Enter departure location"
+              optionFilterProp="label"
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: "Istanbul",
+                  label: "Istanbul",
+                },
+                {
+                  value: "New York City",
+                  label: "New York City",
+                },
+                {
+                  value: "Berlin",
+                  label: "Berlin",
+                },
+                {
+                  value: "Los Angeles",
+                  label: "Los Angeles",
+                },
+                {
+                  value: "Paris",
+                  label: "Paris",
+                },
+                {
+                  value: "Dubai",
+                  label: "Dubai",
+                },
+                {
+                  value: "Singapore",
+                  label: "Singapore",
+                },
+                {
+                  value: "Hong Kong",
+                  label: "Hong Kong",
+                },
+                {
+                  value: "London Heathrow",
+                  label: "London Heathrow",
+                },
+                {
+                  value: "San Francisco",
+                  label: "San Francisco",
+                },
+              ]}
+            />
+          </Form.Item>
 
-        <Form.Item
-          name="departureDay"
-          label="Departure Day"
-          rules={[
-            { required: true, message: "Please select a departure day!" },
-          ]}
-        >
-          <DatePicker style={{ width: "100%" }} />
-        </Form.Item>
+          <Form.Item
+            name="departureDay"
+            label="Departure Day"
+            rules={[
+              { required: true, message: "Please select a departure day!" },
+            ]}
+          >
+            <DatePicker style={{ width: "100%" }} />
+          </Form.Item>
 
-        <Form.Item
-          name="arrivalLocation"
-          label="Arrival Location"
-          rules={[
-            { required: true, message: "Please select an arrival location!" },
-          ]}
-        >
-          <Input placeholder="Enter arrival location" />
-        </Form.Item>
+          <Form.Item
+            name="arrivalLocation"
+            label="Arrival Location"
+            rules={[
+              { required: true, message: "Please select an arrival location!" },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder="Enter arrival location"
+              optionFilterProp="label"
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={[
+                {
+                  value: "Istanbul",
+                  label: "Istanbul",
+                },
+                {
+                  value: "New York City",
+                  label: "New York City",
+                },
+                {
+                  value: "Berlin",
+                  label: "Berlin",
+                },
+                {
+                  value: "Los Angeles",
+                  label: "Los Angeles",
+                },
+                {
+                  value: "Paris",
+                  label: "Paris",
+                },
+                {
+                  value: "Dubai",
+                  label: "Dubai",
+                },
+                {
+                  value: "Singapore",
+                  label: "Singapore",
+                },
+                {
+                  value: "Hong Kong",
+                  label: "Hong Kong",
+                },
+                {
+                  value: "London Heathrow",
+                  label: "London Heathrow",
+                },
+                {
+                  value: "San Francisco",
+                  label: "San Francisco",
+                },
+              ]}
+            />
+          </Form.Item>
 
-        <Form.Item name="airlineCompany" label="Airline Company">
-          <Select placeholder="Select airline company (optional)">
-            <Option value="">Any</Option>
-            <Option value="THY">Turkish Airlines</Option>
-            <Option value="BA">British Airways</Option>
-            <Option value="EK">Emirates</Option>
-          </Select>
-        </Form.Item>
+          <Form.Item name="airlineCompany" label="Airline Company">
+            <Select placeholder="Select airline company (optional)">
+              <Option value="">Any</Option>
+              <Option value="THY">Turkish Airlines</Option>
+              <Option value="BA">British Airways</Option>
+              <Option value="EK">Emirates</Option>
+            </Select>
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Search Flights
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              className="w-full"
+            >
+              Search Flights
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };
