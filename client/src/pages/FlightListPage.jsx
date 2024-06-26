@@ -8,10 +8,8 @@ import FilterFlight from "../components/FilterFlight";
 const FlightListPage = () => {
   const [directFlights, setDirectFlights] = useState([]);
   const [connectingFlights, setConnectingFlights] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchFlights = async (filters = {}) => {
-    setLoading(true);
     try {
       const response = await axios.get("http://localhost:8080/flights/filter", {
         params: {
@@ -23,7 +21,6 @@ const FlightListPage = () => {
       const { directFlights, connectingFlights } = response.data;
       setDirectFlights(directFlights || []);
       setConnectingFlights(connectingFlights || []);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching flight data:", error);
     }
@@ -36,10 +33,6 @@ const FlightListPage = () => {
   const handleFilter = (filters) => {
     fetchFlights(filters);
   };
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <div className="bg-slate-100 min-h-screen">

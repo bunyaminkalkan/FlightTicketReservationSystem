@@ -90,7 +90,7 @@ const RegisterPage = () => {
               htmlType="submit"
               className="w-full bg-gray-800 border-gray-600 text-white py-2 px-4 rounded"
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#64748B"; // Tailwind hover:bg-slate-500
+                e.currentTarget.style.backgroundColor = "#64748B";
                 e.currentTarget.style.borderColor = "#64748B";
               }}
               onMouseLeave={(e) => {

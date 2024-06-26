@@ -1,13 +1,8 @@
 import React from "react";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state.from;
-
   const onFinish = async (values) => {
     try {
       const response = await axios.post(
@@ -24,7 +19,7 @@ const LoginPage = () => {
         localStorage.setItem("isAdmin", false);
       }
       message.success("Login Successfully");
-      navigate(from, { replace: true });
+      window.location.href = "/";
     } catch (error) {
       message.error("Email or password is not correct!");
     }

@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Form, Button, Checkbox, TimePicker, InputNumber } from "antd";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import './FilterFlight.css'
+import "./FilterFlight.css";
 
 const FilterFlight = ({ onFilter }) => {
   const [form] = Form.useForm();

@@ -271,93 +271,100 @@ const PaymentForm = ({
     }
   };
 
+  const isLoggedIn = () => {
+    const isLogged = Boolean(localStorage.getItem("id"));
+    if (isLogged) {setOpen(true)}
+    else {navigate("/login")}
+  };
+
   return (
     <>
       <Button
         type="primary"
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => setOpen(true)}
+        onClick={isLoggedIn}
       >
         Purchase
       </Button>
-      {localStorage.getItem("id") ? (
-        <Modal
-          title={<div className="text-center text-gray-800 w-full">Payment Information</div>}
-          open={open}
-          onOk={handleOk}
-          okText="Purchase"
-          confirmLoading={confirmLoading}
-          onCancel={() => {
-            setOpen(false);
-            setSeat1();
-            setSeat2();
-          }}
-        >
-          <div className="flex justify-center mb-4">
-            <Cards
-              number={formValues.number}
-              expiry={formValues.expiry}
-              cvc={formValues.cvc}
-              name={formValues.name}
-              focused={formValues.focus}
-              placeholders={{ name: "Full Name" }}
-            />
+
+      <Modal
+        title={
+          <div className="text-center text-gray-800 w-full">
+            Payment Information
           </div>
-          <form className="space-y-4">
-            <Input
-              type="text"
-              minLength={16}
-              maxLength={16}
-              name="number"
-              placeholder="Card Number"
-              value={formValues.number}
-              onChange={handleNumericInputChange}
-              onFocus={handleInputFocus}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-            <Input
-              type="text"
-              minLength={4}
-              maxLength={4}
-              name="expiry"
-              placeholder="MM/YY"
-              value={formValues.expiry}
-              onChange={handleNumericInputChange}
-              onFocus={handleInputFocus}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-            <Input
-              type="text"
-              minLength={3}
-              maxLength={3}
-              name="cvc"
-              placeholder="CVC"
-              value={formValues.cvc}
-              onChange={handleNumericInputChange}
-              onFocus={handleInputFocus}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-            <Input
-              type="text"
-              minLength={6}
-              maxLength={40}
-              name="name"
-              placeholder="Full Name"
-              value={formValues.name}
-              onChange={handleTextInputChange}
-              onFocus={handleInputFocus}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </form>
-          <div className="mt-4">
-            {isConnectingFlight
-              ? renderConnectingTreeSelect()
-              : renderDirectTreeSelect()}
-          </div>
-        </Modal>
-      ) : (
-        navigate("/login", { state: { from: location.pathname } })
-      )}
+        }
+        open={open}
+        onOk={handleOk}
+        okText="Purchase"
+        confirmLoading={confirmLoading}
+        onCancel={() => {
+          setOpen(false);
+          setSeat1();
+          setSeat2();
+        }}
+      >
+        <div className="flex justify-center mb-4">
+          <Cards
+            number={formValues.number}
+            expiry={formValues.expiry}
+            cvc={formValues.cvc}
+            name={formValues.name}
+            focused={formValues.focus}
+            placeholders={{ name: "Full Name" }}
+          />
+        </div>
+        <form className="space-y-4">
+          <Input
+            type="text"
+            minLength={16}
+            maxLength={16}
+            name="number"
+            placeholder="Card Number"
+            value={formValues.number}
+            onChange={handleNumericInputChange}
+            onFocus={handleInputFocus}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <Input
+            type="text"
+            minLength={4}
+            maxLength={4}
+            name="expiry"
+            placeholder="MM/YY"
+            value={formValues.expiry}
+            onChange={handleNumericInputChange}
+            onFocus={handleInputFocus}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <Input
+            type="text"
+            minLength={3}
+            maxLength={3}
+            name="cvc"
+            placeholder="CVC"
+            value={formValues.cvc}
+            onChange={handleNumericInputChange}
+            onFocus={handleInputFocus}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <Input
+            type="text"
+            minLength={6}
+            maxLength={40}
+            name="name"
+            placeholder="Full Name"
+            value={formValues.name}
+            onChange={handleTextInputChange}
+            onFocus={handleInputFocus}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </form>
+        <div className="mt-4">
+          {isConnectingFlight
+            ? renderConnectingTreeSelect()
+            : renderDirectTreeSelect()}
+        </div>
+      </Modal>
     </>
   );
 };
