@@ -84,7 +84,7 @@ public class FlightService {
         flight.setArrivalLocation(request.getArrivalLocation());
         flight.setArrivalDate(request.getArrivalDate());
 
-        List<Integer> businessSeat = IntStream.range(1,request.getEconomySeatCount()+1).boxed().toList();
+        List<Integer> businessSeat = IntStream.range(1,request.getBusinessSeatCount()+1).boxed().toList();
         List<Integer> economySeat = IntStream.range(1,request.getEconomySeatCount()+1).boxed().toList();
 
         flight.setBusinessSeat(businessSeat);
