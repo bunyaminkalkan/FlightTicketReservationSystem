@@ -55,9 +55,9 @@ const SearchFlightPage = () => {
           layout="vertical"
           onFinish={onFinish}
           initialValues={{
-            departureLocation: "Istanbul",
+            departureLocation: null,
             departureDay: null,
-            arrivalLocation: "New York City",
+            arrivalLocation: null,
             airlineCompany: "",
           }}
         >

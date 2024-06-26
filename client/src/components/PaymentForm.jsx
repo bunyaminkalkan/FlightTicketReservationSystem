@@ -356,7 +356,7 @@ const PaymentForm = ({
           </div>
         </Modal>
       ) : (
-        navigate("/login")
+        navigate("/login", { state: { from: location.pathname } })
       )}
     </>
   );

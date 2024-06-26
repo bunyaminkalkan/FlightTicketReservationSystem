@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [id, setId] = useState(null);
 
@@ -32,14 +34,13 @@ const ProfilePage = () => {
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("firstName", response.data.firstName);
         localStorage.setItem("lastName", response.data.lastName);
-        window.location.reload();
+        navigate("/profile");
         message.success("Update successful");
       })
       .catch((error) => {
         message.error("Update failed");
       });
   };
-
   return (
     <div
       className="bg-slate-100 flex justify-center items-center"

@@ -48,7 +48,7 @@ const FlightListPage = () => {
 
         {directFlights.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
+            <h2 className="text-lg bg-slate-200 font-semibold mb-4 text-center text-gray-800">
               Direct Flights
             </h2>
             <div className="grid grid-cols-1">
@@ -70,7 +70,7 @@ const FlightListPage = () => {
         )}
         {connectingFlights.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
+            <h2 className="text-lg bg-slate-200 font-semibold mb-4 text-center text-gray-800">
               Connecting Flights
             </h2>
             <div className="grid grid-cols-1">
