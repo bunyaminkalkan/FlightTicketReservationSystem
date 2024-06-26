@@ -3,16 +3,21 @@ package com.example.FlightTicketReservationSystem.service;
 import com.example.FlightTicketReservationSystem.exception.FlightNotFoundException;
 import com.example.FlightTicketReservationSystem.model.Flight;
 import com.example.FlightTicketReservationSystem.repository.FlightRepository;
+import com.example.FlightTicketReservationSystem.request.AddFlightRequest;
 import com.example.FlightTicketReservationSystem.request.FilterFlightsRequest;
 import com.example.FlightTicketReservationSystem.request.SearchFlightsRequest;
+import com.example.FlightTicketReservationSystem.request.UpdateFlightRequest;
 import com.example.FlightTicketReservationSystem.response.ConnectingFlightResponse;
 import com.example.FlightTicketReservationSystem.response.SearchFlightsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -67,13 +72,33 @@ public class FlightService {
         return filteredFlights;
     }
 
-    public Flight createFlight(Flight flight) {
-        return flightRepository.save(flight);
+    public Flight createFlight(AddFlightRequest request) {
+        Flight flight = new Flight();
+        flight.setId(flightRepository.count()+1);
+        flight.setFlightNumber(request.getFlightNumber());
+        flight.setPlaneNumber(request.getPlaneNumber());
+        flight.setBusinessPrice(request.getBusinessPrice());
+        flight.setEconomyPrice(request.getEconomyPrice());
+        flight.setDepartureLocation(request.getDepartureLocation());
+        flight.setDepartureDate(request.getDepartureDate());
+        flight.setArrivalLocation(request.getArrivalLocation());
+        flight.setArrivalDate(request.getArrivalDate());
+
+        List<Integer> businessSeat = IntStream.range(1,request.getEconomySeatCount()+1).boxed().toList();
+        List<Integer> economySeat = IntStream.range(1,request.getEconomySeatCount()+1).boxed().toList();
+
+        flight.setBusinessSeat(businessSeat);
+        flight.setEconomySeat(economySeat);
+
+        LocalTime flightTime = calculateFlightTime(request.getDepartureDate(), request.getArrivalDate());
+        flight.setFlightTime(flightTime);
+        flightRepository.save(flight);
+        return flight;
     }
 
-    public Flight updateFlight(Long id, Flight newFlight) {
+    public Flight updateFlight(Long id, UpdateFlightRequest request) {
         Flight flight = flightRepository.findById(id).orElseThrow(FlightNotFoundException::new);
-        updateFlightWithNewFlight(flight, newFlight);
+        updateFlightWithNewFlight(flight, request);
         return flightRepository.save(flight);
     }
 
@@ -119,15 +144,24 @@ public class FlightService {
                 && sameArrivalFlight.getDepartureDate().isBefore(sameDepartureFlight.getArrivalDate().plusHours(12).plusMinutes(1));
     }
 
-    private void updateFlightWithNewFlight(Flight flight, Flight newFlight) {
-        flight.setFlightNumber(newFlight.getFlightNumber());
-        flight.setPlaneNumber(newFlight.getPlaneNumber());
-        flight.setDepartureLocation(newFlight.getDepartureLocation());
-        flight.setDepartureDate(newFlight.getDepartureDate());
-        flight.setArrivalLocation(newFlight.getArrivalLocation());
-        flight.setArrivalDate(newFlight.getArrivalDate());
-        flight.setEconomyPrice(newFlight.getEconomyPrice());
-        flight.setBusinessPrice(newFlight.getBusinessPrice());
-        flight.setFlightTime(newFlight.getFlightTime());
+    private void updateFlightWithNewFlight(Flight flight, UpdateFlightRequest request) {
+        flight.setFlightNumber(request.getFlightNumber());
+        flight.setPlaneNumber(request.getPlaneNumber());
+        flight.setDepartureLocation(request.getDepartureLocation());
+        flight.setDepartureDate(request.getDepartureDate());
+        flight.setArrivalLocation(request.getArrivalLocation());
+        flight.setArrivalDate(request.getArrivalDate());
+        flight.setEconomyPrice(request.getEconomyPrice());
+        flight.setBusinessPrice(request.getBusinessPrice());
+        flight.setFlightTime(calculateFlightTime(request.getDepartureDate(), request.getArrivalDate()));
+    }
+
+    private LocalTime calculateFlightTime(LocalDateTime departureDate, LocalDateTime arrivalDate) {
+        Duration duration = Duration.between(departureDate, arrivalDate);
+        long seconds = duration.getSeconds();
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long remainingSeconds = seconds % 60;
+        return LocalTime.of((int) hours, (int) minutes, (int) remainingSeconds);
     }
 }

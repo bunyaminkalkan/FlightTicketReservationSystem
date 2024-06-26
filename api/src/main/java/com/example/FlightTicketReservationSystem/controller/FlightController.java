@@ -1,6 +1,8 @@
 package com.example.FlightTicketReservationSystem.controller;
 
 import com.example.FlightTicketReservationSystem.model.Flight;
+import com.example.FlightTicketReservationSystem.request.AddFlightRequest;
+import com.example.FlightTicketReservationSystem.request.UpdateFlightRequest;
 import com.example.FlightTicketReservationSystem.response.SearchFlightsResponse;
 import com.example.FlightTicketReservationSystem.service.FlightService;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +43,13 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity<Flight> createFlight(@RequestBody Flight flight) {
-        return ResponseEntity.ok(flightService.createFlight(flight));
+    public ResponseEntity<Flight> createFlight(@RequestBody AddFlightRequest request) {
+        return ResponseEntity.ok(flightService.createFlight(request));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Flight> updateFlight(@PathVariable Long id, @RequestBody Flight flight) {
-        return ResponseEntity.ok(flightService.updateFlight(id, flight));
+    public ResponseEntity<Flight> updateFlight(@PathVariable Long id, @RequestBody UpdateFlightRequest request) {
+        return ResponseEntity.ok(flightService.updateFlight(id, request));
     }
 
     @DeleteMapping("delete/{id}")
