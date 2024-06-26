@@ -45,10 +45,10 @@ public class UserService {
         if (request.getEmail() != null && !request.getEmail().isEmpty()) {
             user.setEmail(request.getEmail());
         }
-        if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
+        if (request.getFirstName() != null) {
             user.setFirstName(request.getFirstName());
         }
-        if (request.getLastName() != null && !request.getLastName().isEmpty()) {
+        if (request.getLastName() != null) {
             user.setLastName(request.getLastName());
         }
         return new UserResponse(userRepository.save(user));
