@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Form, Button, Checkbox, TimePicker, InputNumber } from "antd";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -6,7 +6,7 @@ import './FilterFlight.css'
 
 const FilterFlight = ({ onFilter }) => {
   const [form] = Form.useForm();
-  const [alignment, setAlignment] = React.useState("none");
+  const [alignment, setAlignment] = useState("");
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -50,7 +50,7 @@ const FilterFlight = ({ onFilter }) => {
           Direct Flight
         </ToggleButton>
         <ToggleButton
-          value="none"
+          value=""
           className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
         >
           All

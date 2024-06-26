@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, message, Popconfirm, Space } from "antd";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Space,
+} from "antd";
 import axios from "axios";
 
 const EditFlightsPage = () => {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
   const [currentFlight, setCurrentFlight] = useState(null);
   const [form] = Form.useForm();
+  const [addForm] = Form.useForm();
 
   useEffect(() => {
     axios
@@ -49,7 +60,9 @@ const EditFlightsPage = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary" danger>Delete</Button>
+            <Button type="primary" danger>
+              Delete
+            </Button>
           </Popconfirm>
         </Space>
       ),
@@ -59,10 +72,10 @@ const EditFlightsPage = () => {
   const showEditModal = (flight) => {
     setCurrentFlight(flight);
     form.setFieldsValue(flight);
-    setOpen(true);
+    setOpenEdit(true);
   };
 
-  const handleOk = () => {
+  const handleEditOk = () => {
     form.validateFields().then((values) => {
       axios
         .put(`http://localhost:8080/flights/update/${currentFlight.id}`, {
@@ -75,7 +88,7 @@ const EditFlightsPage = () => {
               flight.id === currentFlight.id ? { ...flight, ...values } : flight
             )
           );
-          setOpen(false);
+          setOpenEdit(false);
           message.success("Update Successful");
         })
         .catch((error) => {
@@ -84,8 +97,29 @@ const EditFlightsPage = () => {
     });
   };
 
-  const handleCancel = () => {
-    setOpen(false);
+  const handleEditCancel = () => {
+    setOpenEdit(false);
+  };
+
+  const handleAddOk = () => {
+    addForm.validateFields().then((values) => {
+      axios
+        .post("http://localhost:8080/flights", values)
+        .then((response) => {
+          setFlights([...flights, response.data]);
+          setOpenAdd(false);
+          addForm.resetFields();
+          message.success("Flight added successfully");
+        })
+        .catch((error) => {
+          message.error("Failed to add flight!");
+        });
+    });
+  };
+
+  const handleAddCancel = () => {
+    setOpenAdd(false);
+    addForm.resetFields();
   };
 
   const deleteFlight = (id) => {
@@ -101,7 +135,15 @@ const EditFlightsPage = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
+      <div className="grid justify-items-center my-2">
+        <Button
+          type="primary"
+          onClick={() => setOpenAdd(true)}
+        >
+          Add Flight
+        </Button>
+      </div>
       <Table
         columns={columns}
         dataSource={flights}
@@ -110,9 +152,9 @@ const EditFlightsPage = () => {
       />
       <Modal
         title="Edit Flight"
-        open={open}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        open={openEdit}
+        onOk={handleEditOk}
+        onCancel={handleEditCancel}
         okText="Save"
       >
         <Form form={form} layout="vertical" name="editFlightForm">
@@ -197,14 +239,121 @@ const EditFlightsPage = () => {
           >
             <Input type="datetime-local" />
           </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        title="Add Flight"
+        open={openAdd}
+        onOk={handleAddOk}
+        onCancel={handleAddCancel}
+        okText="Add"
+      >
+        <Form form={addForm} layout="vertical" name="addFlightForm">
           <Form.Item
-            name="flightTime"
-            label="Flight Time"
+            name="flightNumber"
+            label="Flight Number"
             rules={[
-              { required: true, message: "Please enter the flight time!" },
+              { required: true, message: "Please enter the flight number!" },
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            name="planeNumber"
+            label="Plane Number"
+            rules={[
+              { required: true, message: "Please enter the plane number!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="businessPrice"
+            label="Business Price"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the business class price!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="economyPrice"
+            label="Economy Price"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the economy class price!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="businessSeatCount"
+            label="Count Of Business Seat"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the count of business class seat!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="economySeatCount"
+            label="Count Of Economy Seat"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the count of economy class seat!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="departureLocation"
+            label="Departure Location"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the departure location!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="departureDate"
+            label="Departure Date"
+            rules={[
+              { required: true, message: "Please enter the departure date!" },
+            ]}
+          >
+            <Input type="datetime-local" />
+          </Form.Item>
+          <Form.Item
+            name="arrivalLocation"
+            label="Arrival Location"
+            rules={[
+              { required: true, message: "Please enter the arrival location!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="arrivalDate"
+            label="Arrival Date"
+            rules={[
+              { required: true, message: "Please enter the arrival date!" },
+            ]}
+          >
+            <Input type="datetime-local" />
           </Form.Item>
         </Form>
       </Modal>

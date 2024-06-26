@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, DatePicker, Select, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./SearchFlightPage.css";
 
 const { Option } = Select;
 
@@ -49,8 +48,8 @@ const SearchFlightPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center search-container">
-      <div className="w-full max-w-md p-8 border border-gray-300 rounded-lg shadow-lg">
+    <div className="flex justify-center bg-slate-100 items-center" style={{height: "579.5px"}}>
+      <div className="w-full max-w-md p-8 bg-slate-300 border border-gray-300 rounded-lg shadow-lg">
         <Form
           name="flight_search"
           layout="vertical"
@@ -211,7 +210,15 @@ const SearchFlightPage = () => {
               type="primary"
               htmlType="submit"
               loading={loading}
-              className="w-full"
+              className="w-full bg-gray-800 border-gray-600 text-white py-2 px-4 rounded"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#64748B";
+                e.currentTarget.style.borderColor = "#64748B";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#334155";
+                e.currentTarget.style.borderColor = "#334155";
+              }}
             >
               Search Flights
             </Button>

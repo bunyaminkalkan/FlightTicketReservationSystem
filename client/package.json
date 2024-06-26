@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.1.0",
     "@heroicons/react": "^2.1.4",
+    "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
     "antd": "^5.18.0",
     "axios": "^1.7.2",

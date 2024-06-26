@@ -22,6 +22,9 @@ const Navbar = () => {
   const handleSignOut = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("isAdmin");
+    localStorage.removeItem("email");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
     window.location.href = "/";
   };
 
@@ -80,7 +83,7 @@ const Navbar = () => {
                         </button>
                       </>
                     )}
-                    {localStorage.getItem("isAdmin") === 'true' && (
+                    {localStorage.getItem("isAdmin") === "true" && (
                       <button
                         onClick={() => navigate("/editFlights")}
                         className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
@@ -93,6 +96,13 @@ const Navbar = () => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
+                {localStorage.getItem("firstName") && (
+                  <div>
+                    <p className="text-gray-300">
+                      Hello {localStorage.getItem("firstName")}{" "}
+                    </p>
+                  </div>
+                )}
                 {localStorage.getItem("id") && (
                   <Menu as="div" className="relative ml-3">
                     <div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
 import axios from "axios";
 import DirectFlightCard from "../components/DirectFlightCard";
 import ConnectingFlightCard from "../components/ConnectingFlightCard";
@@ -21,14 +20,12 @@ const FlightListPage = () => {
           maxFlightTime: filters.maxFlightTime,
         },
       });
-
       const { directFlights, connectingFlights } = response.data;
       setDirectFlights(directFlights || []);
       setConnectingFlights(connectingFlights || []);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching flight data:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -40,62 +37,63 @@ const FlightListPage = () => {
     fetchFlights(filters);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
-    <div className="p-4 grid justify-items-center">
-      <FilterFlight className="" onFilter={handleFilter} />
+    <div className="bg-slate-100 min-h-screen">
+      <div className="p-8 grid justify-items-center">
+        <FilterFlight className="" onFilter={handleFilter} />
 
-      {directFlights.length > 0 && (
-        <div className="mt-8 flex flex-col">
-          <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
-            Direct Flights
-          </h2>
-          <div className="grid grid-cols-1 justify-items-center">
-            {directFlights.map((flight) => (
-              <div className="flex flex-col justify-center" key={flight.id}>
-                <DirectFlightCard flight={flight} />
-                <div className="my-3 mx-auto">
-                  <PaymentForm
-                    isConnectingFlight={false}
-                    flightNumber1={flight.flightNumber}
-                    economySeats1={flight.economySeat}
-                    businessSeats1={flight.businessSeat}
-                  />
+        {directFlights.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
+              Direct Flights
+            </h2>
+            <div className="grid grid-cols-1">
+              {directFlights.map((flight) => (
+                <div className="grid" key={flight.id}>
+                  <DirectFlightCard flight={flight} />
+                  <div className="my-3 mx-auto">
+                    <PaymentForm
+                      isConnectingFlight={false}
+                      flightNumber1={flight.flightNumber}
+                      economySeats1={flight.economySeat}
+                      businessSeats1={flight.businessSeat}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-
-      {connectingFlights.length > 0 && (
-        <div className="mt-8 grid grid-cols-1">
-          <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
-            Connecting Flights
-          </h2>
-          <div className="grid grid-cols-1">
-            {connectingFlights.map((flight, index) => (
-              <div className="flex flex-col justify-center" key={index}>
-                <ConnectingFlightCard className="w-96" flight={flight} />
-                <div className="my-3 mx-auto">
-                  <PaymentForm
-                    isConnectingFlight={true}
-                    flightNumber1={flight.flightNumber1}
-                    economySeats1={flight.economySeat1}
-                    businessSeats1={flight.businessSeat1}
-                    flightNumber2={flight.flightNumber2}
-                    economySeats2={flight.economySeat2}
-                    businessSeats2={flight.businessSeat2}
-                  />
+        )}
+        {connectingFlights.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold mb-4 text-center text-gray-800">
+              Connecting Flights
+            </h2>
+            <div className="grid grid-cols-1">
+              {connectingFlights.map((flight, index) => (
+                <div className="grid" key={index}>
+                  <ConnectingFlightCard flight={flight} />
+                  <div className="my-3 mx-auto">
+                    <PaymentForm
+                      isConnectingFlight={true}
+                      flightNumber1={flight.flightNumber1}
+                      economySeats1={flight.economySeat1}
+                      businessSeats1={flight.businessSeat1}
+                      flightNumber2={flight.flightNumber2}
+                      economySeats2={flight.economySeat2}
+                      businessSeats2={flight.businessSeat2}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
