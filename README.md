@@ -78,12 +78,15 @@ The Spring Boot application should now be running on http://localhost:8080.
 ## Usage
 1. Open your browser and navigate to http://localhost:3000 to access the frontend.
 2. Use the frontend interface to browse, like, and purchase flights.
+
 ## User Features
 - Search Flights: Use the form to search for flights by selecting the departure location, arrival location, and departure date. Optionally, you can also select the airline.
 - Filter Flights: Filter the listed flights by maximum price, flight duration, and flight type (Direct, Connecting, or Both).
 - Purchase Flights: To purchase a flight, you must be logged in. If you don't have an account, you can register.
-### Admin Features
-Manage Flights: Admin users can add, delete, and update flights. After logging in with admin credentials, access the admin panel to manage flights.
+
+#### Admin Features
+- Manage Flights: Admin users can add, delete, and update flights. After logging in with admin credentials, access the admin panel to manage flights.
+
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
