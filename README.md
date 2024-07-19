@@ -76,7 +76,7 @@ The React application should now be running on http://localhost:5173.
 The Spring Boot application should now be running on http://localhost:8080.
 
 ## Usage
-1. Open your browser and navigate to http://localhost:3000 to access the frontend.
+1. Open your browser and navigate to http://localhost:5173 to access the frontend.
 2. Use the frontend interface to browse, like, and purchase flights.
 
 ## User Features
@@ -84,7 +84,7 @@ The Spring Boot application should now be running on http://localhost:8080.
 - Filter Flights: Filter the listed flights by maximum price, flight duration, and flight type (Direct, Connecting, or Both).
 - Purchase Flights: To purchase a flight, you must be logged in. If you don't have an account, you can register.
 
-#### Admin Features
+##### Admin Features
 - Manage Flights: Admin users can add, delete, and update flights. After logging in with admin credentials, access the admin panel to manage flights.
 
 ## Contributing
